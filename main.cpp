@@ -36,44 +36,11 @@ void mergeVector(vector<GDP>& left, vector<GDP>& right, vector<GDP>& table) {
 	int leftIndex = 0, rightIndex = 0, mergedIndex = 0;
 
 	while ((leftIndex < leftSize) && (rightIndex < rightSize)) {
-		if (left[leftIndex].getValue() > right[rightIndex].getValue()) {
+		if (left[leftIndex] > right[rightIndex]) {
 			table[mergedIndex++] = left[leftIndex++];
 		}
-		else if (left[leftIndex].getValue() < right[rightIndex].getValue()) {
+		else if (left[leftIndex] < right[rightIndex]) {
 			table[mergedIndex++] = right[rightIndex++];
-		}
-		else {
-			// if the GDP values are equal, sort based on year (if year is smaller, since $5000 in 2000 is more than $5000 in 2018 due to inflation)
-			if (left[leftIndex].getYear() < right[rightIndex].getYear()) {
-				table[mergedIndex++] = left[leftIndex++];
-			}
-			else if (left[leftIndex].getYear() > right[rightIndex].getYear()) {
-				table[mergedIndex++] = right[rightIndex++];
-			}
-			else {
-				// if year doesn't break the tie, we go to alphabetical order of the first character of industry name
-				string leftName = left[leftIndex].getName();
-				string rightName = right[rightIndex].getName();
-				if ((int)leftName[0] > (int)rightName[0]) {
-					table[mergedIndex++] = left[leftIndex++];
-				}
-				else if ((int)leftName[0] < (int)rightName[0]) {
-					table[mergedIndex++] = right[rightIndex++];
-				}
-				else {
-					// if the first character doesn't break the tie, using industry name string size
-					if (leftName.size() > rightName.size()) {
-						table[mergedIndex++] = left[leftIndex++];
-					}
-					else if (leftName.size() < rightName.size()) {
-						table[mergedIndex++] = right[rightIndex++];
-					}
-					else {
-						// if even that doesn't break the tie, just add the left one first
-						table[mergedIndex++] = left[leftIndex++];
-					}
-				}
-			}
 		}
 	}
 	while (leftIndex < leftSize) {
@@ -96,6 +63,7 @@ int main() {
 	GDPTable.push_back(GDP(1998, "Cow", "NE", 2512312));
 	GDPTable.push_back(GDP(1995, "Cow", "NE", 2512312));
 	GDPTable.push_back(GDP(1995, "Cow", "SC", 2512312));
+	GDPTable.push_back(GDP(1995, "Cattle", "SC", 2512312));
 	auto start = high_resolution_clock::now();
 	mergeSortTable(GDPTable);
 	auto stop = high_resolution_clock::now();
