@@ -148,4 +148,18 @@ public:
 			}
 		}
 	}
+	// overloading other operators
+	GDP operator=(GDP copy) {
+		value = copy.getValue();
+		state = copy.getState();
+		industryName = copy.getName();
+		year = copy.getYear();
+		return *this;
+	}
+	bool operator== (GDP compare) {
+		if ((value == compare.value) && (state == compare.state) && (industryName == compare.industryName) && (year == compare.year)) {
+			return true;
+		}
+		return false;
+	}
 };
